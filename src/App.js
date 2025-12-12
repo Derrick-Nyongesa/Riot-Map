@@ -1,9 +1,22 @@
 import Home from "./pages/Home";
+import Authentication from "./pages/Authentication";
+import { Route, Routes } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   return (
     <>
-      <Home />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/auth" element={<Authentication />} />
+      </Routes>
     </>
   );
 }

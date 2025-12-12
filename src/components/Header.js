@@ -1,7 +1,48 @@
-import React from "react";
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate, Link } from "react-router-dom";
 
 function Header() {
-  return <div>Header</div>;
+  const user = useAuth();
+  const navigate = useNavigate();
+  const [signingOut, setSigningOut] = useState(false);
+
+  const handleSignOut = async () => {
+    setSigningOut(true);
+    try {
+      await signOut(auth);
+      navigate("/auth", { replace: true });
+    } catch (err) {
+      console.error("Sign out error:", err);
+    } finally {
+      setSigningOut(false);
+    }
+  };
+  const loggedInUser = isMe
+    ? user
+    : { displayName: "User", photoURL: "", email: "" };
+
+  return (
+    <div>
+      {user ? (
+        <>
+          <button
+            className="error-btn"
+            onClick={handleSignOut}
+            disabled={signingOut}
+            title="Sign Out"
+            style={{ background: "none", border: "none", cursor: "pointer" }}
+          >
+            {signingOut ? "Signing out…" : "Sign Out"}
+          </button>
+        </>
+      ) : (
+        <Link to="/auth">Sign in</Link>
+      )}
+    </div>
+  );
 }
 
 export default Header;
