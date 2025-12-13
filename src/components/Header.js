@@ -20,9 +20,6 @@ function Header() {
       setSigningOut(false);
     }
   };
-  const loggedInUser = isMe
-    ? user
-    : { displayName: "User", photoURL: "", email: "" };
 
   return (
     <div>
