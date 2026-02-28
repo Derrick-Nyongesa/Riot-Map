@@ -1,4 +1,4 @@
-import React from "react";
+// src/pages/Home.js
 import Header from "../components/Header";
 
 function Home() {

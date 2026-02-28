@@ -1,4 +1,4 @@
-import React from "react";
+// src/index.js
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
@@ -11,5 +11,5 @@ root.render(
     <AuthProvider>
       <App />
     </AuthProvider>
-  </BrowserRouter>
+  </BrowserRouter>,
 );

@@ -1,3 +1,4 @@
+// src/App.js
 import Home from "./pages/Home";
 import Authentication from "./pages/Authentication";
 import { Route, Routes } from "react-router-dom";

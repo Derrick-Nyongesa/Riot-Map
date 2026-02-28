@@ -1,3 +1,4 @@
+// src/components/Header.js
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { signOut } from "firebase/auth";
