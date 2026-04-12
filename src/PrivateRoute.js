@@ -6,9 +6,12 @@ export default function PrivateRoute({ children }) {
 
   // while Firebase restores session, show nothing (or a spinner)
   if (initializing) {
-    <div style={{ padding: 40, textAlign: "center" }}>
-      <div className="loader">Loading...</div>
-    </div>;
+    return (
+      <div className="loading-screen">
+        <div className="spinner" />
+        <p>Loading Riot Map…</p>
+      </div>
+    );
   }
 
   // if authenticated, render children; otherwise redirect to auth

@@ -1,70 +1,143 @@
-# Getting Started with Create React App
+# Riot Map
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+These days it seems that people are protesting about one thing or another. Most of these protests can be peaceful but others morph into violent running battles with police and rioters. There are looting and destruction of public and private property. No one really wants to find themselves in the middle of that.
+Riot Map is a React + Firebase web application allows users to view areas prone to riots and also allow users to post areas where the riots are happening. It uses a clean responsive interface, geolocation, and local persistence for reported incidents and saved locations.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Google sign-in authentication with Firebase
+- View your current location on the map
+- Click the map or enter coordinates manually to place a riot report
+- Save important places with custom labels and notes
+- View reported riot markers and saved places on the map
+- Search and filter reports and places
+- Responsive layout for desktop and mobile
+- Persistent data using `localStorage`
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- React
+- React Router
+- Firebase Authentication
+- React Leaflet + Leaflet
+- CSS in `index.css`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Structure
 
-### `npm test`
+```text
+src/
+├── components/
+│   ├── Header.js
+│   ├── IncidentForm.js
+│   ├── MapView.js
+│   └── PlacesForm.js
+├── context/
+│   ├── AuthContext.js
+│   └── RiotContext.js
+├── pages/
+│   ├── Authentication.js
+│   └── Home.js
+├── App.js
+├── PrivateRoute.js
+├── firebase.js
+├── index.js
+└── index.css
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Prerequisites
 
-### `npm run build`
+- Node.js 18 or newer
+- npm or yarn
+- A Firebase project with Google Authentication enabled
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Firebase Setup
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Create a `.env` file in the project root and add your Firebase values:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```env
+REACT_APP_FIREBASE_API_KEY=your_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
+REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+REACT_APP_FIREBASE_APP_ID=your_app_id
+REACT_APP_FIREBASE_MEASUREMENT_ID=your_measurement_id
+```
 
-### `npm run eject`
+Also make sure Google sign-in is enabled in your Firebase Authentication settings.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Installation
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+If you have not installed the map dependencies yet:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm install react-leaflet leaflet
+```
 
-## Learn More
+## Development
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The app will run on `http://localhost:3000`.
 
-### Code Splitting
+## Build for Production
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm run build
+```
 
-### Analyzing the Bundle Size
+## How It Works
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Authentication
 
-### Making a Progressive Web App
+Users sign in with Google. Protected routes are handled through `PrivateRoute` and `AuthContext`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Map View
 
-### Advanced Configuration
+The main dashboard shows:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- your current location, when permission is allowed
+- selected coordinates
+- riot markers
+- saved important places
 
-### Deployment
+### Reporting a Riot Location
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+You can:
 
-### `npm run build` fails to minify
+- click the map to choose coordinates
+- enter latitude and longitude manually
+- submit a title, severity, status, and description
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Saving Important Places
+
+You can store locations like:
+
+- Home
+- Work
+- School
+- Other important places
+
+### Search and Filters
+
+Search works across report and place names, descriptions, notes, statuses, severities, and coordinates.
+
+## Data Storage
+
+This app uses `localStorage` for riot reports and saved places. That means the data stays on the device and browser profile where it was created.
+
+## Notes
+
+- The map is powered by OpenStreetMap tiles through React Leaflet.
+- The app is styled entirely through `src/index.css`.
+- The layout is responsive and adapts to smaller screens.
+
+## License
+
+This project is provided for educational and demo purposes.

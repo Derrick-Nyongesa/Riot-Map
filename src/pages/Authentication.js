@@ -6,27 +6,26 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Authentication() {
-  const { user } = useAuth();
+  const { user, initializing } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // If already signed in, redirect to home
   useEffect(() => {
-    if (user) {
+    if (!initializing && user) {
       navigate("/", { replace: true });
     }
-  }, [user, navigate]);
+  }, [user, initializing, navigate]);
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
-    setError(null);
+    setError("");
+
     try {
       await signInWithPopup(auth, googleProvider);
-      // onAuthStateChanged (AuthProvider) will update user and navigate will run
+      navigate("/", { replace: true });
     } catch (err) {
-      console.error("Google sign-in error:", err);
-      setError(err.message || "Failed to sign in");
+      setError(err.message || "Sign in failed.");
     } finally {
       setLoading(false);
     }
@@ -34,21 +33,24 @@ function Authentication() {
 
   return (
     <div className="auth-page">
-      <div className="auth-card">
-        <div className="auth-logo">{/* Application logo, is available */}</div>
-        <h1 className="auth-title">Welcome to Riot Map Application</h1>
-        <p className="auth-sub">Sign in with Google to proceed.</p>
+      <section className="auth-card">
+        <p className="eyebrow">Secure access</p>
+        <h1>Riot Map</h1>
+        <p className="intro-text">
+          Sign in to view the live map, save important places, and post new
+          incident markers.
+        </p>
 
         <button
-          className="google-btn"
+          className="btn btn-primary btn-full"
           onClick={handleGoogleSignIn}
           disabled={loading}
         >
-          {loading ? "Signing in…" : "Sign in with Google"}
+          {loading ? "Signing in…" : "Continue with Google"}
         </button>
 
-        {error && <div className="auth-error">Error: {error}</div>}
-      </div>
+        {error && <p className="error-text">{error}</p>}
+      </section>
     </div>
   );
 }

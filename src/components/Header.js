@@ -23,23 +23,34 @@ function Header() {
   };
 
   return (
-    <div>
-      {user ? (
-        <>
+    <header className="app-header">
+      <Link to="/" className="brand">
+        <span className="brand-mark">RM</span>
+        <span className="brand-text">
+          Riot <strong>Map</strong>
+        </span>
+      </Link>
+
+      <div className="header-actions">
+        {user && (
+          <span className="user-chip">{user.displayName || user.email}</span>
+        )}
+
+        {user ? (
           <button
-            className="error-btn"
+            className="btn btn-ghost"
             onClick={handleSignOut}
             disabled={signingOut}
-            title="Sign Out"
-            style={{ background: "none", border: "none", cursor: "pointer" }}
           >
-            {signingOut ? "Signing out…" : "Sign Out"}
+            {signingOut ? "Signing out…" : "Sign out"}
           </button>
-        </>
-      ) : (
-        <Link to="/auth">Sign in</Link>
-      )}
-    </div>
+        ) : (
+          <Link className="btn btn-primary" to="/auth">
+            Sign in
+          </Link>
+        )}
+      </div>
+    </header>
   );
 }
 
