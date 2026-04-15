@@ -1,14 +1,20 @@
 // src/components/Header.js
-import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import { signOut } from "firebase/auth";
+import { useState, useEffect } from "react";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate, Link } from "react-router-dom";
 
 function Header() {
-  const user = useAuth();
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const [signingOut, setSigningOut] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (u) => {
+      setUser(u);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleSignOut = async () => {
     setSigningOut(true);
@@ -22,6 +28,10 @@ function Header() {
     }
   };
 
+  const displayNameOrEmail = user
+    ? user.displayName || user.email || "Signed in"
+    : null;
+
   return (
     <header className="app-header">
       <Link to="/" className="brand">
@@ -33,7 +43,9 @@ function Header() {
 
       <div className="header-actions">
         {user && (
-          <span className="user-chip">{user.displayName || user.email}</span>
+          <div className="user-chip" title={displayNameOrEmail}>
+            {displayNameOrEmail}
+          </div>
         )}
 
         {user ? (
